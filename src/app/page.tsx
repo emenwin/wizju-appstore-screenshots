@@ -18,7 +18,7 @@ import { ScreenshotPreview } from "../components/slides/ScreenshotPreview";
 import { 
   IPHONE_SLIDES, IPAD_SLIDES, ANDROID_SLIDES, 
   ANDROID_7P_SLIDES, ANDROID_10P_SLIDES, 
-  ANDROID_7L_SLIDES, ANDROID_10L_SLIDES, MACOS_SLIDES, FEATURE_GRAPHIC_SLIDE
+  ANDROID_7L_SLIDES, ANDROID_10L_SLIDES, MACOS_SLIDES, MACOS_FRAMELESS_SLIDES, FEATURE_GRAPHIC_SLIDE
 } from "../components/slides/SlideGenerators";
 
 export default function ScreenshotsPage() {
@@ -29,6 +29,7 @@ export default function ScreenshotsPage() {
   const [themeId, setThemeId] = useState<ThemeId>("media-hub");
   const [sizeIdx, setSizeIdx] = useState(0);
   const [exporting, setExporting] = useState<string | null>(null);
+  const [showMacFrame, setShowMacFrame] = useState(true);
   const exportRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function ScreenshotsPage() {
     }
     if (device === "android") return { cW: AW, cH: AH, currentSizes: ANDROID_SIZES, slides: ANDROID_SLIDES };
     if (device === "ipad") return { cW: IPAD_W, cH: IPAD_H, currentSizes: IPAD_SIZES, slides: IPAD_SLIDES };
-    if (device === "macos") return { cW: MB_W, cH: MB_H, currentSizes: MACOS_SIZES, slides: MACOS_SLIDES };
+    if (device === "macos") return { cW: MB_W, cH: MB_H, currentSizes: MACOS_SIZES, slides: showMacFrame ? MACOS_SLIDES : MACOS_FRAMELESS_SLIDES };
     if (device === "feature-graphic") return { cW: FGW, cH: FGH, currentSizes: FG_SIZES, slides: [FEATURE_GRAPHIC_SLIDE] };
     return { cW: W, cH: H, currentSizes: IPHONE_SIZES, slides: IPHONE_SLIDES };
   })();
@@ -218,6 +219,30 @@ export default function ScreenshotsPage() {
               <option value="android-10">{UI_TEXT.devices["android-10"]}</option>
             </select>
           </div>
+
+          {device === "macos" && (
+            <div style={{ display: "flex", gap: 4, background: "#F3F4F6", borderRadius: 8, padding: 4, flexShrink: 0 }}>
+              {([true, false] as boolean[]).map((framed) => (
+                <button
+                  key={String(framed)}
+                  onClick={() => setShowMacFrame(framed)}
+                  style={{
+                    padding: "4px 12px",
+                    borderRadius: 6,
+                    border: "none",
+                    cursor: "pointer",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    whiteSpace: "nowrap",
+                    background: showMacFrame === framed ? "white" : "transparent",
+                    color: showMacFrame === framed ? "#2563EB" : "#6B7280",
+                  }}
+                >
+                  {framed ? "有框" : "无框"}
+                </button>
+              ))}
+            </div>
+          )}
 
           {isTablet && (
             <div style={{ display: "flex", gap: 4, background: "#F3F4F6", borderRadius: 8, padding: 4, flexShrink: 0 }}>
