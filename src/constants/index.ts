@@ -1,7 +1,7 @@
 import { Locale, ScreenKind } from "../types";
 
-export const W = 1320;
-export const H = 2868;
+export const W = 1242;
+export const H = 2688;
 export const IPAD_W = 2064;
 export const IPAD_H = 2752;
 export const AW = 1080;
@@ -20,8 +20,8 @@ export const MB_W = 2560;
 export const MB_H = 1600;
 
 export const IPHONE_SIZES = [
+  { label: "6.5\"", w: 1242, h: 2688 },
   { label: "6.9\"", w: 1320, h: 2868 },
-  { label: "6.5\"", w: 1284, h: 2778 },
   { label: "6.3\"", w: 1206, h: 2622 },
   { label: "6.1\"", w: 1125, h: 2436 },
 ] as const;
