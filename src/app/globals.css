@@ -1,26 +1,190 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/*
+ * Geist 设计 token 系统
+ * ------------------------------------------------------------------
+ * 100% 采用 Vercel Geist 官方色板（参考 PRD 附录 A），仅保留 dark / light 两种模式。
+ * 切换机制：通过 <html data-theme="dark|light"> 切换 :root 上的 CSS 变量，
+ * Tailwind v4 工具类经 @theme inline 引用这些变量，从而随主题联动。
+ * 默认主题为 dark（与 layout.tsx 上 <html data-theme="dark"> 一致）。
+ */
 
+/*
+ * Tailwind v4 token 映射层。
+ * 使用 @theme inline 让生成的工具类直接引用 var(--xxx)，
+ * 而非在构建期拷贝色值，这样 dark / light 切换可实时生效。
+ * 由此可用：bg-background-100 / text-gray-1000 / text-accent /
+ * border-gray-alpha-400 / font-sans / font-mono 等工具类。
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* 背景 */
+  --color-background-100: var(--background-100);
+  --color-background-200: var(--background-200);
+  --color-background-300: var(--background-300);
+  /* 灰阶（实色） */
+  --color-gray-100: var(--gray-100);
+  --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300);
+  --color-gray-400: var(--gray-400);
+  --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600);
+  --color-gray-700: var(--gray-700);
+  --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900);
+  --color-gray-1000: var(--gray-1000);
+  /* 灰阶（带透明度，用于边框 / 面板叠加） */
+  --color-gray-alpha-100: var(--gray-alpha-100);
+  --color-gray-alpha-200: var(--gray-alpha-200);
+  --color-gray-alpha-300: var(--gray-alpha-300);
+  --color-gray-alpha-400: var(--gray-alpha-400);
+  --color-gray-alpha-500: var(--gray-alpha-500);
+  --color-gray-alpha-600: var(--gray-alpha-600);
+  --color-gray-alpha-700: var(--gray-alpha-700);
+  --color-gray-alpha-800: var(--gray-alpha-800);
+  --color-gray-alpha-900: var(--gray-alpha-900);
+  --color-gray-alpha-1000: var(--gray-alpha-1000);
+  /* 语义色：accent=主强调（蓝）、signal=信号（青）、emby=媒体（绿） */
+  --color-accent: var(--accent);
+  --color-signal: var(--signal);
+  --color-emby: var(--emby);
+  /* Geist 色板：blue / red / amber / green */
+  --color-blue-700: var(--blue-700);
+  --color-blue-900: var(--blue-900);
+  --color-red-700: var(--red-700);
+  --color-amber-700: var(--amber-700);
+  --color-green-700: var(--green-700);
+  /* 字体：由 geist 包在 <html> 上注入 --font-geist-sans / --font-geist-mono */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/*
+ * Geist Dark 主题（默认）
+ * background-100 = #000000；主文字 gray-1000 = #ededed；边框 gray-alpha-400 = #ffffff24。
+ * 全部取值对齐 Geist Dark 官方规范，无任何品牌色 override。
+ */
+:root,
+[data-theme="dark"] {
+  --background-100: #000000;
+  --background-200: #0a0a0a;
+  --background-300: #111111;
+
+  --gray-100: #1c1c1c;
+  --gray-200: #232323;
+  --gray-300: #2c2c2c;
+  --gray-400: #383838;
+  --gray-500: #404040;
+  --gray-600: #5d5d5d;
+  --gray-700: #737373;
+  --gray-800: #8f8f8f;
+  --gray-900: #a0a0a0;
+  --gray-1000: #ededed;
+
+  --gray-alpha-100: #ffffff0a;
+  --gray-alpha-200: #ffffff14;
+  --gray-alpha-300: #ffffff1f;
+  --gray-alpha-400: #ffffff24;
+  --gray-alpha-500: #ffffff33;
+  --gray-alpha-600: #ffffff47;
+  --gray-alpha-700: #ffffff59;
+  --gray-alpha-800: #ffffff73;
+  --gray-alpha-900: #ffffff8f;
+  --gray-alpha-1000: #ffffffed;
+
+  --blue-700: #47a8ff;
+  --blue-900: #47a8ff;
+
+  --accent: #47a8ff;
+  --signal: #2dd4bf;
+  --emby: #34d399;
+
+  --red-700: #f87171;
+  --amber-700: #fbbf24;
+  --green-700: #34d399;
+
+  /* 卡片阴影：dark 下黑色弱阴影 */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.18);
+  /* 悬停遮罩 scrim：深色半透明，dark / light 通用（保证白色文字始终可读） */
+  --scrim: rgba(0, 0, 0, 0.55);
 }
 
+/*
+ * Geist Light 主题
+ * token 命名与 Dark 一一对应，值为 Geist Light 官方配色。
+ */
+[data-theme="light"] {
+  --background-100: #ffffff;
+  --background-200: #fafafa;
+  --background-300: #f5f5f5;
+
+  --gray-100: #f5f5f5;
+  --gray-200: #e8e8e8;
+  --gray-300: #d4d4d4;
+  --gray-400: #a1a1a1;
+  --gray-500: #8c8c8c;
+  --gray-600: #737373;
+  --gray-700: #404040;
+  --gray-800: #525252;
+  --gray-900: #666666;
+  --gray-1000: #111111;
+
+  --gray-alpha-100: #0000000a;
+  --gray-alpha-200: #00000014;
+  --gray-alpha-300: #0000001f;
+  --gray-alpha-400: #00000024;
+  --gray-alpha-500: #00000033;
+  --gray-alpha-600: #00000047;
+  --gray-alpha-700: #00000059;
+  --gray-alpha-800: #00000073;
+  --gray-alpha-900: #0000008f;
+  --gray-alpha-1000: #000000ed;
+
+  --blue-700: #0070f3;
+  --blue-900: #0047b3;
+
+  --accent: #0070f3;
+  --signal: #0d9488;
+  --emby: #059669;
+
+  --red-700: #dc2626;
+  --amber-700: #d97706;
+  --green-700: #059669;
+
+  /* 卡片阴影：light 下黑色阴影略强以保证可见 */
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.12);
+  --scrim: rgba(0, 0, 0, 0.55);
+}
+
+/*
+ * 基础排版：正文背景与字色随主题切换；字体使用 Geist Sans。
+ */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--background-100);
+  color: var(--gray-1000);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * Geist 双层 focus ring（WCAG 2.1 AA）。
+ * 内层 2px 与背景同色形成 gap，外层 2px 为 blue-900，保证 dark / light 下均清晰可见。
+ */
+.geist-focus:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background-100), 0 0 0 4px var(--blue-900);
+}
+
+/*
+ * 导出按钮主态：Geist button-primary。
+ * Dark：实底 gray-1000 + background-100 字色；Light：实底 gray-1000 + background-100 字色（保持高对比）。
+ */
+.geist-button-primary {
+  background: var(--gray-1000);
+  color: var(--background-100);
+}
+.geist-button-primary:hover {
+  background: var(--gray-900);
+}
+.geist-button-primary:disabled {
+  opacity: 0.5;
+  cursor: default;
 }

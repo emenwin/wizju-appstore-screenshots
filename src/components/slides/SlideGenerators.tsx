@@ -1,9 +1,10 @@
-/**
- * 幻灯片生成器入口文件。
- * 将各种设备的宣传图生成逻辑汇总于此，便于其他组件导入使用。
- */
-
-import { PhoneFrame } from "../frames/PhoneFrame";
+import React from "react";
+import { DeviceComp, Locale, ScreenKind, SlideCopy, SlideDef, Theme, WidthFn } from "../../types";
+import { COPY, FEATURE_PILLS } from "../../constants";
+import { img } from "../../utils/image";
+import { SlideBackdrop } from "../ui/SlideBackdrop";
+import { Caption } from "../ui/Caption";
+import { iPhoneFrame } from "../frames/iPhoneFrame";
 import { IPadFrame } from "../frames/IPadFrame";
 import { AndroidPhoneFrame } from "../frames/AndroidPhoneFrame";
 import { TabletPortraitFrame } from "../frames/TabletPortraitFrame";
@@ -20,8 +21,14 @@ export { FEATURE_GRAPHIC_SLIDE } from "./FeatureGraphicGenerator";
 
 // ========== 各设备宣传图集导出 ==========
 
-/** iPhone 竖屏系列图集 */
-export const IPHONE_SLIDES = makePortraitSlides("apple/iphone", PhoneFrame, phoneW);
+export const IPHONE_SLIDES = makePortraitSlides("apple/iphone", iPhoneFrame, phoneW);
+export const IPAD_SLIDES = makePortraitSlides("apple/ipad", IPadFrame, ipadW);
+export const ANDROID_SLIDES = makePortraitSlides("android/phone", AndroidPhoneFrame, phoneW);
+export const ANDROID_7P_SLIDES = makePortraitSlides("android/tablet-7/portrait", TabletPortraitFrame, tabletPW);
+export const ANDROID_10P_SLIDES = makePortraitSlides("android/tablet-10/portrait", TabletPortraitFrame, tabletPW);
+export const ANDROID_7L_SLIDES = [0, 1, 2, 3, 4, 5].map((index) => makeLandscapeSlide("android/tablet-7/landscape", index, TabletLandscapeFrame, tabletLW));
+export const ANDROID_10L_SLIDES = [0, 1, 2, 3, 4, 5].map((index) => makeLandscapeSlide("android/tablet-10/landscape", index, TabletLandscapeFrame, tabletLW));
+export const MACOS_SLIDES = [0, 1, 2, 3, 4, 5].map((index) => makeMacSlide("macos", index, true));
 
 /** iPad 竖屏系列图集 */
 export const IPAD_SLIDES = makePortraitSlides("apple/ipad", IPadFrame, ipadW);

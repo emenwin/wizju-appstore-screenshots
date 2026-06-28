@@ -3,71 +3,50 @@ import { DeviceCompProps } from "../../types";
 import { ScreenContent } from "../ui/ScreenContent";
 
 /**
- * MacBook 设备外观框架组件。
+ * MacBook 设备外观框架组件，纯 CSS 仿真 Geist 中性灰外框。
  *
  * 支持两种展示模式：
- * - showFrame=true（默认）：使用 CSS 精确模拟现代 MacBook 空间灰铝合金哑光外观，
- *   含 FaceTime 摄像头圆点、精细铰链底座比例。
- * - showFrame=false：无外框模式，截图以"悬浮屏幕"形式呈现，
- *   配合环境光晕阴影与主题配色，营造沉浸感更强的展示效果。
+ * - showFrame=true（默认）：CSS 仿真 MacBook 机身（Geist 灰金属渐变 + 描边 + 主题投影），
+ *   含 FaceTime 摄像头圆点与铰链底座，屏幕区以 theme.bg 打底。
+ * - showFrame=false：无外框模式，截图以"悬浮屏幕"形式呈现，配合主题投影营造沉浸感。
+ *
+ * 取色 100% 来自 Theme token，随 dark / light 主题联动，避免旧版"空间灰"硬编码色
+ * 与 Geist 单色体系冲突、导致导出图配色不协调。
+ * 使用 React.memo 避免同内容组件在主题 / 幻灯片切换时不必要重渲染。
  */
 export const MacBookFrame = React.memo(function MacBookFrame({
   devicePath = "macos",
   alt,
   locale,
   screen,
-  style,
   theme,
+  style,
   showFrame = true,
 }: DeviceCompProps & { showFrame?: boolean }) {
   if (!showFrame) {
-    // 无框模式：截图以悬浮屏幕风格展示，搭配环境光晕
+    // 无框模式：截图以悬浮屏幕风格展示，投影由外层布局负责
     return (
       <div style={{ position: "relative", ...style }}>
-        <div
-          style={{
-            position: "relative",
-            // aspectRatio: "16/10",
-            // width: "100%",
-            // borderRadius: "0.5%",
-            // overflow: "hidden",
-            // boxShadow: [
-            //   "0 0 0 1px rgba(255,255,255,0.07)",
-            //   "0 2px 0 1px rgba(0,0,0,0.5)",
-            //   "0 36px 100px rgba(0,0,0,0.6)",
-            //   "0 10px 30px rgba(0,0,0,0.35)",
-            //   `0 0 140px ${theme.accent}1A`,
-            // ].join(", "),
-          }}
-        >
-          <ScreenContent devicePath={devicePath} locale={locale} screen={screen} alt={alt} />
-        </div>
+        <ScreenContent devicePath={devicePath} locale={locale} screen={screen} alt={alt} />
       </div>
     );
   }
 
   return (
     <div style={{ position: "relative", ...style }}>
-      {/* MacBook 机身 — 空间灰铝合金哑光外壳 */}
+      {/* MacBook 机身：Geist 灰金属渐变 + 描边 + 主题投影，padding 留出屏幕边框 */}
       <div
         style={{
           position: "relative",
           aspectRatio: "16/10",
           width: "100%",
           borderRadius: "2.1% / 3.4%",
-          background: "linear-gradient(175deg, #424244 0%, #343436 40%, #272729 100%)",
+          background: `linear-gradient(175deg, ${theme.frameBezel} 0%, ${theme.surface3} 45%, ${theme.surface2} 100%)`,
           padding: "2.6% 1.8% 2%",
-          boxShadow: [
-            "0 0 0 1px rgba(0,0,0,0.75)",
-            "0 0 0 2px rgba(75,75,80,0.5)",
-            "0 36px 90px rgba(0,0,0,0.6)",
-            "0 8px 28px rgba(0,0,0,0.35)",
-            "inset 0 1.5px 0 rgba(255,255,255,0.13)",
-            "inset 0 -1px 0 rgba(0,0,0,0.45)",
-          ].join(", "),
+          boxShadow: `inset 0 0 0 1px ${theme.border}, ${theme.frameShadow}`,
         }}
       >
-        {/* FaceTime 摄像头圆点 */}
+        {/* FaceTime 摄像头圆点：居中贴顶，近黑色，配 border 描边微凹感 */}
         <div
           style={{
             position: "absolute",
@@ -76,20 +55,20 @@ export const MacBookFrame = React.memo(function MacBookFrame({
             transform: "translateX(-50%)",
             width: "1.1%",
             height: "1.6%",
-            background: "#111113",
+            background: theme.frameDetail,
             borderRadius: "50%",
             zIndex: 10,
-            boxShadow: "0 0 0 1.5px rgba(255,255,255,0.06), inset 0 1px 2px rgba(0,0,0,0.9)",
+            boxShadow: `0 0 0 1px ${theme.border}`,
           }}
         />
-        {/* 屏幕显示区域 */}
+        {/* 屏幕显示区域：theme.bg 打底，截图覆盖其上 */}
         <div
           style={{
             width: "100%",
             height: "100%",
             borderRadius: "0.5% / 0.8%",
             overflow: "hidden",
-            background: "#000",
+            background: theme.bg,
             position: "relative",
           }}
         >
@@ -98,7 +77,7 @@ export const MacBookFrame = React.memo(function MacBookFrame({
           </div>
         </div>
       </div>
-      {/* 铰链底座 */}
+      {/* 铰链底座：Geist 灰渐变 + 描边，略宽于机身，模拟笔记本底座 */}
       <div
         style={{
           position: "absolute",
@@ -106,16 +85,12 @@ export const MacBookFrame = React.memo(function MacBookFrame({
           left: "-3.8%",
           right: "-3.8%",
           height: "3.2%",
-          background: "linear-gradient(180deg, #363637 0%, #2C2C2E 55%, #222223 100%)",
+          background: `linear-gradient(180deg, ${theme.surface3} 0%, ${theme.surface2} 55%, ${theme.surface1} 100%)`,
           borderRadius: "0 0 8px 8px",
-          boxShadow: [
-            "0 8px 28px rgba(0,0,0,0.45)",
-            "inset 0 1px 0 rgba(255,255,255,0.07)",
-            "inset 0 -1px 0 rgba(0,0,0,0.4)",
-          ].join(", "),
+          boxShadow: `inset 0 0 0 1px ${theme.border}`,
         }}
       >
-        {/* 开盖缺口指示 */}
+        {/* 开盖缺口指示：用 panelStrong 半透明叠加，表示底座凹槽 */}
         <div
           style={{
             position: "absolute",
@@ -124,7 +99,7 @@ export const MacBookFrame = React.memo(function MacBookFrame({
             transform: "translateX(-50%)",
             width: "9%",
             height: "52%",
-            background: "rgba(0,0,0,0.35)",
+            background: theme.panelStrong,
             borderRadius: "0 0 5px 5px",
           }}
         />

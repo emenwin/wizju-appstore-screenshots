@@ -41,10 +41,11 @@ export const ScreenshotPreview = React.memo(function ScreenshotPreview({
         position: "relative",
         overflow: "hidden",
         borderRadius: 12,
-        boxShadow: "0 4px 20px rgba(0,0,0,0.18)",
+        // 预览卡片底色：Geist background-300，作为幻灯片背后的留白底
+        boxShadow: "var(--shadow-card)",
         cursor: "pointer",
         aspectRatio: `${cW}/${cH}`,
-        background: "#111315",
+        background: "var(--background-300)",
       }}
       onClick={onExport}
       title={`${UI_TEXT.export} ${slide.id}`}
@@ -57,7 +58,7 @@ export const ScreenshotPreview = React.memo(function ScreenshotPreview({
         height: cH,
         transform: `scale(${scale})`,
         transformOrigin: "top left",
-        fontFamily: "var(--font-plus-jakarta), sans-serif",
+        fontFamily: "var(--font-geist-sans), sans-serif",
       }}>
         {slide.component({ cW, cH, locale, theme })}
       </div>
@@ -65,7 +66,8 @@ export const ScreenshotPreview = React.memo(function ScreenshotPreview({
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(0,0,0,0.5)",
+          // 悬停 scrim：深色半透明，白色文字在 dark / light 下均可读
+          background: "var(--scrim)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -80,7 +82,7 @@ export const ScreenshotPreview = React.memo(function ScreenshotPreview({
           event.currentTarget.style.opacity = "0";
         }}
       >
-        <span style={{ color: "white", fontWeight: 800, fontSize: 14 }}>{UI_TEXT.export}</span>
+        <span style={{ color: "#ffffff", fontWeight: 800, fontSize: 14 }}>{UI_TEXT.export}</span>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 /**
  * 需要在导出前预加载的资源列表
  */
-const IMAGE_PATHS = ["/mockup.png", "/app-icon.png"];
+const IMAGE_PATHS = ["/app-icon.png"];
 const imageCache: Record<string, string> = {};
 
 /**

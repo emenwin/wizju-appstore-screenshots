@@ -4,6 +4,8 @@ import { Locale, ScreenKind, Theme } from "../../types";
 /**
  * 屏幕内拟真 UI 组件：当没有真实截图资源时，通过代码在各设备框内渲染占位 UI 结构，用于模拟真实 App 的信息架构。
  * 不展示具体内容细节，仅提供大致色彩块和组件位置。
+ *
+ * 配色 100% 来自传入的 Geist 主题（theme），随 dark / light 自动切换，无任何硬编码色值。
  */
 export function MockScreen({
   kind,
@@ -48,11 +50,12 @@ export function MockScreen({
     <div style={{
       width: "100%",
       height: "100%",
-      background: "linear-gradient(180deg, #121417 0%, #181B1E 48%, #0B0D0F 100%)",
-      color: "#F8FAFC",
+      // 屏幕底渐变：由 Geist surface 灰阶过渡到页面底色，dark / light 均成立
+      background: `linear-gradient(180deg, ${theme.surface1} 0%, ${theme.surface2} 48%, ${theme.bg} 100%)`,
+      color: theme.fg,
       overflow: "hidden",
       position: "relative",
-      fontFamily: "var(--font-plus-jakarta), sans-serif",
+      fontFamily: "var(--font-geist-sans), sans-serif",
     }}>
       {/* 顶部栏用来模拟真实 App 的信息架构，不展示操作说明。 */}
       <div style={{
@@ -64,8 +67,8 @@ export function MockScreen({
         justifyContent: "space-between",
       }}>
         <div>
-          <div style={{ fontSize: "4.8cqw", fontWeight: 800, lineHeight: 1 }}>{screenText.title}</div>
-          <div style={{ marginTop: "1.2cqw", color: "rgba(248,250,252,0.48)", fontSize: "2.1cqw", fontWeight: 600 }}>
+          <div style={{ fontSize: "4.8cqw", fontWeight: 800, lineHeight: 1, color: theme.fg }}>{screenText.title}</div>
+          <div style={{ marginTop: "1.2cqw", color: theme.muted, fontSize: "2.1cqw", fontWeight: 600 }}>
             wizju
           </div>
         </div>
@@ -92,8 +95,9 @@ export function MockScreen({
             textAlign: "center",
             borderRadius: "2.8cqw",
             padding: "2.2cqw 0",
-            background: index === 0 ? theme.accent : "rgba(255,255,255,0.08)",
-            color: index === 0 ? "#111315" : "rgba(248,250,252,0.76)",
+            // 选中 tab：Geist accent 实底 + 页面底色文字（与 accent 形成高对比）
+            background: index === 0 ? theme.accent : theme.panel,
+            color: index === 0 ? theme.bg : theme.muted,
             fontSize: "2.4cqw",
             fontWeight: 800,
           }}>
@@ -102,6 +106,7 @@ export function MockScreen({
         ))}
       </div>
 
+      {/* 媒体 Hero：signal(青) → accent(蓝) 渐变，叠加暗色 scrim 胶囊 */}
       <div style={{
         position: "absolute",
         top: "26%",
@@ -123,8 +128,9 @@ export function MockScreen({
             <div key={chip} style={{
               borderRadius: "999px",
               padding: "1.2cqw 2.2cqw",
+              // scrim 半透明黑底 + 白字，用于彩色媒体 Hero 上的胶囊（内容层，非设计 token）
               background: "rgba(0,0,0,0.24)",
-              color: "white",
+              color: "#ffffff",
               fontSize: "2.2cqw",
               fontWeight: 800,
             }}>
@@ -147,8 +153,9 @@ export function MockScreen({
           <div key={`${card}-${index}`} style={{
             minHeight: "26cqw",
             borderRadius: "4cqw",
-            background: index === 0 ? "rgba(255,255,255,0.16)" : "rgba(255,255,255,0.08)",
-            border: "0.24cqw solid rgba(255,255,255,0.08)",
+            // 卡片表面：首张用 panelStrong 强调，其余 panel；边框统一 border
+            background: index === 0 ? theme.panelStrong : theme.panel,
+            border: `0.24cqw solid ${theme.border}`,
             padding: "3.2cqw",
             display: "flex",
             flexDirection: "column",
@@ -158,14 +165,16 @@ export function MockScreen({
               width: "100%",
               height: "10cqw",
               borderRadius: "2.4cqw",
+              // 图标块：交替使用 emby(绿) / signal(青) 半透明色
               background: index % 2 === 0 ? `${theme.emby}55` : `${theme.signal}55`,
             }} />
-            <div style={{ color: "#F8FAFC", fontSize: "3cqw", fontWeight: 800 }}>{card}</div>
+            <div style={{ color: theme.fg, fontSize: "3cqw", fontWeight: 800 }}>{card}</div>
             <div style={{
               width: index % 2 === 0 ? "72%" : "54%",
               height: "1.5cqw",
               borderRadius: "999px",
-              background: "rgba(255,255,255,0.2)",
+              // 骨架条：半透明边框色
+              background: theme.border,
             }} />
           </div>
         ))}

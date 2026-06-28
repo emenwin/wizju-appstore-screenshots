@@ -5,28 +5,70 @@ import { toPng } from "html-to-image";
 
 import { Device, Orientation, Locale, ThemeId } from "../types";
 import {
-  W, H, IPAD_W, IPAD_H, AW, AH, 
-  AT7P_W, AT7P_H, AT7L_W, AT7L_H, 
-  AT10P_W, AT10P_H, AT10L_W, AT10L_H, 
+  W, H, IPAD_W, IPAD_H, AW, AH,
+  AT7P_W, AT7P_H, AT7L_W, AT7L_H,
+  AT10P_W, AT10P_H, AT10L_W, AT10L_H,
   FGW, FGH, MB_W, MB_H,
-  IPHONE_SIZES, IPAD_SIZES, ANDROID_SIZES, 
-  ANDROID_7P_SIZES, ANDROID_7L_SIZES, ANDROID_10P_SIZES, ANDROID_10L_SIZES, 
+  IPHONE_SIZES, IPAD_SIZES, ANDROID_SIZES,
+  ANDROID_7P_SIZES, ANDROID_7L_SIZES, ANDROID_10P_SIZES, ANDROID_10L_SIZES,
   FG_SIZES, MACOS_SIZES, LOCALES, UI_TEXT, THEMES
 } from "../constants";
 import { preloadAllImages } from "../utils/image";
 import { ScreenshotPreview } from "../components/slides/ScreenshotPreview";
-import { 
-  IPHONE_SLIDES, IPAD_SLIDES, ANDROID_SLIDES, 
-  ANDROID_7P_SLIDES, ANDROID_10P_SLIDES, 
+import {
+  IPHONE_SLIDES, IPAD_SLIDES, ANDROID_SLIDES,
+  ANDROID_7P_SLIDES, ANDROID_10P_SLIDES,
   ANDROID_7L_SLIDES, ANDROID_10L_SLIDES, MACOS_SLIDES, MACOS_FRAMELESS_SLIDES, FEATURE_GRAPHIC_SLIDE
 } from "../components/slides/SlideGenerators";
+
+/*
+ * 通用内联样式片段：引用 Geist CSS 变量，随 <html data-theme> 切换 dark / light。
+ * 集中维护以避免散落各处的重复样式，并保证全站色彩 100% 来自 Geist token。
+ */
+const selectStyle: React.CSSProperties = {
+  fontSize: 12,
+  border: "1px solid var(--gray-alpha-400)",
+  borderRadius: 6,
+  padding: "5px 10px",
+  background: "var(--background-200)",
+  color: "var(--gray-1000)",
+};
+
+// 分段控件轨道：半透明灰底
+const segmentTrackStyle: React.CSSProperties = {
+  display: "flex",
+  gap: 4,
+  background: "var(--gray-alpha-100)",
+  borderRadius: 8,
+  padding: 4,
+  flexShrink: 0,
+};
+
+/**
+ * 生成分段按钮的内联样式。
+ * 选中态：灰-alpha-300 底 + accent 文字；未选中：透明底 + gray-900 文字。
+ */
+function segmentButtonStyle(active: boolean): React.CSSProperties {
+  return {
+    padding: "4px 14px",
+    borderRadius: 6,
+    border: "none",
+    cursor: "pointer",
+    fontSize: 12,
+    fontWeight: 700,
+    whiteSpace: "nowrap",
+    background: active ? "var(--gray-alpha-300)" : "transparent",
+    color: active ? "var(--accent)" : "var(--gray-900)",
+  };
+}
 
 export default function ScreenshotsPage() {
   const [ready, setReady] = useState(false);
   const [device, setDevice] = useState<Device>("iphone");
   const [orientation, setOrientation] = useState<Orientation>("portrait");
   const [locale, setLocale] = useState<Locale>("zh-Hans");
-  const [themeId, setThemeId] = useState<ThemeId>("media-hub");
+  // 主题标识：仅 dark / light 两种模式（Geist 设计系统）
+  const [themeId, setThemeId] = useState<ThemeId>("dark");
   const [sizeIdx, setSizeIdx] = useState(0);
   const [exporting, setExporting] = useState<string | null>(null);
   const [showMacFrame, setShowMacFrame] = useState(true);
@@ -35,6 +77,11 @@ export default function ScreenshotsPage() {
   useEffect(() => {
     preloadAllImages().then(() => setReady(true));
   }, []);
+
+  // 同步外壳 data-theme：themeId 同时驱动外壳 CSS 变量与截图内容 THEMES[themeId]
+  useEffect(() => {
+    document.documentElement.dataset.theme = themeId;
+  }, [themeId]);
 
   const theme = THEMES[themeId];
   const isTablet = device === "android-7" || device === "android-10";
@@ -124,20 +171,21 @@ export default function ScreenshotsPage() {
 
   if (!ready) {
     return (
-      <div style={{ minHeight: "100vh", background: "#101214", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <p style={{ color: "#B8B0A3", fontWeight: 700 }}>{UI_TEXT.loading}</p>
+      <div style={{ minHeight: "100vh", background: "var(--background-200)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ color: "var(--gray-900)", fontWeight: 700 }}>{UI_TEXT.loading}</p>
       </div>
     );
   }
 
   return (
-    <div style={{ minHeight: "100vh", background: "#F3F4F6", position: "relative", overflowX: "hidden" }}>
+    <div style={{ minHeight: "100vh", background: "var(--background-100)", position: "relative", overflowX: "hidden" }}>
+      {/* 顶部 sticky 工具栏：Geist 表面 + gray-alpha 底边框 */}
       <div style={{
         position: "sticky",
         top: 0,
         zIndex: 50,
-        background: "white",
-        borderBottom: "1px solid #E5E7EB",
+        background: "var(--background-100)",
+        borderBottom: "1px solid var(--gray-alpha-400)",
         display: "flex",
         alignItems: "center",
       }}>
@@ -150,29 +198,31 @@ export default function ScreenshotsPage() {
           overflowX: "auto",
           minWidth: 0,
         }}>
-          <span style={{ fontWeight: 800, fontSize: 14, whiteSpace: "nowrap" }}>{UI_TEXT.title}</span>
+          <span style={{ fontWeight: 800, fontSize: 14, whiteSpace: "nowrap", color: "var(--gray-1000)" }}>{UI_TEXT.title}</span>
 
           <select
             value={locale}
             onChange={(event) => setLocale(event.target.value as Locale)}
-            style={{ fontSize: 12, border: "1px solid #E5E7EB", borderRadius: 6, padding: "5px 10px" }}
+            className="geist-focus"
+            style={selectStyle}
           >
             {LOCALES.map((item) => (
               <option key={item} value={item}>{UI_TEXT.localeName[item]}</option>
             ))}
           </select>
 
+          {/* 主题选择器：仅 Dark / Light 两种模式 */}
           <select
             value={themeId}
             onChange={(event) => setThemeId(event.target.value as ThemeId)}
-            style={{ fontSize: 12, border: "1px solid #E5E7EB", borderRadius: 6, padding: "5px 10px" }}
+            className="geist-focus"
+            style={selectStyle}
           >
-            <option value="media-hub">Media Hub</option>
-            <option value="signal-dark">Signal Dark</option>
-            <option value="native-light">Native Light</option>
+            <option value="dark">{UI_TEXT.themeName.dark}</option>
+            <option value="light">{UI_TEXT.themeName.light}</option>
           </select>
 
-          <div style={{ display: "flex", gap: 4, background: "#F3F4F6", borderRadius: 8, padding: 4, flexShrink: 0 }}>
+          <div style={segmentTrackStyle}>
             {(["iphone", "ipad", "macos", "android", "feature-graphic"] as Device[]).map((item) => (
               <button
                 key={item}
@@ -181,17 +231,8 @@ export default function ScreenshotsPage() {
                   setSizeIdx(0);
                   setOrientation("portrait");
                 }}
-                style={{
-                  padding: "4px 14px",
-                  borderRadius: 6,
-                  border: "none",
-                  cursor: "pointer",
-                  fontSize: 12,
-                  fontWeight: 700,
-                  whiteSpace: "nowrap",
-                  background: device === item ? "white" : "transparent",
-                  color: device === item ? "#2563EB" : "#6B7280",
-                }}
+                className="geist-focus"
+                style={segmentButtonStyle(device === item)}
               >
                 {UI_TEXT.devices[item]}
               </button>
@@ -204,14 +245,15 @@ export default function ScreenshotsPage() {
                   setSizeIdx(0);
                 }
               }}
+              className="geist-focus"
               style={{
                 fontSize: 12,
                 border: "none",
                 borderRadius: 6,
                 padding: "4px 10px",
                 cursor: "pointer",
-                background: isTablet ? "white" : "transparent",
-                color: isTablet ? "#2563EB" : "#6B7280",
+                background: isTablet ? "var(--gray-alpha-300)" : "transparent",
+                color: isTablet ? "var(--accent)" : "var(--gray-900)",
               }}
             >
               <option value="" disabled>{UI_TEXT.androidTablet}</option>
@@ -221,22 +263,13 @@ export default function ScreenshotsPage() {
           </div>
 
           {device === "macos" && (
-            <div style={{ display: "flex", gap: 4, background: "#F3F4F6", borderRadius: 8, padding: 4, flexShrink: 0 }}>
+            <div style={segmentTrackStyle}>
               {([true, false] as boolean[]).map((framed) => (
                 <button
                   key={String(framed)}
                   onClick={() => setShowMacFrame(framed)}
-                  style={{
-                    padding: "4px 12px",
-                    borderRadius: 6,
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: 12,
-                    fontWeight: 700,
-                    whiteSpace: "nowrap",
-                    background: showMacFrame === framed ? "white" : "transparent",
-                    color: showMacFrame === framed ? "#2563EB" : "#6B7280",
-                  }}
+                  className="geist-focus"
+                  style={segmentButtonStyle(showMacFrame === framed)}
                 >
                   {framed ? "有框" : "无框"}
                 </button>
@@ -245,7 +278,7 @@ export default function ScreenshotsPage() {
           )}
 
           {isTablet && (
-            <div style={{ display: "flex", gap: 4, background: "#F3F4F6", borderRadius: 8, padding: 4, flexShrink: 0 }}>
+            <div style={segmentTrackStyle}>
               {(["portrait", "landscape"] as Orientation[]).map((item) => (
                 <button
                   key={item}
@@ -253,16 +286,8 @@ export default function ScreenshotsPage() {
                     setOrientation(item);
                     setSizeIdx(0);
                   }}
-                  style={{
-                    padding: "4px 12px",
-                    borderRadius: 6,
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: 12,
-                    fontWeight: 700,
-                    background: orientation === item ? "white" : "transparent",
-                    color: orientation === item ? "#2563EB" : "#6B7280",
-                  }}
+                  className="geist-focus"
+                  style={segmentButtonStyle(orientation === item)}
                 >
                   {item === "portrait" ? UI_TEXT.portrait : UI_TEXT.landscape}
                 </button>
@@ -273,7 +298,8 @@ export default function ScreenshotsPage() {
           <select
             value={sizeIdx}
             onChange={(event) => setSizeIdx(Number(event.target.value))}
-            style={{ fontSize: 12, border: "1px solid #E5E7EB", borderRadius: 6, padding: "4px 10px" }}
+            className="geist-focus"
+            style={selectStyle}
           >
             {currentSizes.map((size, index) => (
               <option key={`${size.w}-${size.h}`} value={index}>{size.label} - {size.w}x{size.h}</option>
@@ -281,14 +307,13 @@ export default function ScreenshotsPage() {
           </select>
         </div>
 
-        <div style={{ flexShrink: 0, padding: "10px 16px", borderLeft: "1px solid #E5E7EB" }}>
+        <div style={{ flexShrink: 0, padding: "10px 16px", borderLeft: "1px solid var(--gray-alpha-400)" }}>
           <button
             onClick={exportAll}
             disabled={!!exporting}
+            className="geist-focus geist-button-primary"
             style={{
               padding: "7px 20px",
-              background: exporting ? "#93C5FD" : "#2563EB",
-              color: "white",
               border: "none",
               borderRadius: 8,
               fontSize: 12,
@@ -321,6 +346,7 @@ export default function ScreenshotsPage() {
         ))}
       </div>
 
+      {/* 导出用隐藏画布：字体使用 Geist Sans，保证导出 PNG 字体一致 */}
       <div style={{ position: "absolute", left: 0, top: 0, pointerEvents: "none", width: 0, height: 0, overflow: "hidden" }}>
         {slides.map((slide, index) => (
           <div
@@ -334,7 +360,7 @@ export default function ScreenshotsPage() {
               position: "absolute",
               left: "-9999px",
               top: 0,
-              fontFamily: "var(--font-plus-jakarta), sans-serif",
+              fontFamily: "var(--font-geist-sans), sans-serif",
             }}
           >
             {slide.component({ cW, cH, locale, theme })}
