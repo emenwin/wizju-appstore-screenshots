@@ -21,14 +21,8 @@ export { FEATURE_GRAPHIC_SLIDE } from "./FeatureGraphicGenerator";
 
 // ========== 各设备宣传图集导出 ==========
 
+/** iPhone 系列图集 */
 export const IPHONE_SLIDES = makePortraitSlides("apple/iphone", iPhoneFrame, phoneW);
-export const IPAD_SLIDES = makePortraitSlides("apple/ipad", IPadFrame, ipadW);
-export const ANDROID_SLIDES = makePortraitSlides("android/phone", AndroidPhoneFrame, phoneW);
-export const ANDROID_7P_SLIDES = makePortraitSlides("android/tablet-7/portrait", TabletPortraitFrame, tabletPW);
-export const ANDROID_10P_SLIDES = makePortraitSlides("android/tablet-10/portrait", TabletPortraitFrame, tabletPW);
-export const ANDROID_7L_SLIDES = [0, 1, 2, 3, 4, 5].map((index) => makeLandscapeSlide("android/tablet-7/landscape", index, TabletLandscapeFrame, tabletLW));
-export const ANDROID_10L_SLIDES = [0, 1, 2, 3, 4, 5].map((index) => makeLandscapeSlide("android/tablet-10/landscape", index, TabletLandscapeFrame, tabletLW));
-export const MACOS_SLIDES = [0, 1, 2, 3, 4, 5].map((index) => makeMacSlide("macos", index, true));
 
 /** iPad 竖屏系列图集 */
 export const IPAD_SLIDES = makePortraitSlides("apple/ipad", IPadFrame, ipadW);
@@ -51,6 +45,7 @@ export const ANDROID_7L_SLIDES = [0, 1, 2, 3, 4, 5].map((index) =>
 export const ANDROID_10L_SLIDES = [0, 1, 2, 3, 4, 5].map((index) =>
   makeLandscapeSlide("android/tablet-10/landscape", index, TabletLandscapeFrame, tabletLW)
 );
+
 
 /** 
  * macOS 有框系列图集
