@@ -4,19 +4,12 @@ import { COPY } from "../../constants";
 import { img } from "../../utils/image";
 import { SlideBackdrop } from "../ui/SlideBackdrop";
 import { Caption } from "../ui/Caption";
+import { HeroMacStage } from "../ui/HeroDeviceStage";
 import { MacBookFrame } from "../frames/MacBookFrame";
 
 /**
- * 生成单张 macOS 无框悬浮截图宣传图（单一窗口）。
- * 
- * 布局特点：
- * - 截图全宽大尺寸铺设，底部溢出隐藏，悬浮在居中位置。
- * - 上方居中文字。
- * - 无边框设计，更注重界面的空气感与沉浸感。
- * 
- * @param devicePath 设备素材路径
- * @param index 幻灯片索引
- * @param config 支持覆盖使用的图片
+ * 生成单张 macOS 无框悬浮截图（单一窗口）。
+ * 布局：顶部居中标题，下方大尺寸截图从底边溢出。
  */
 export function makeMacFramelessSingleSlide(devicePath: string, index: number, config?: import("./MacOsGenerator").MacSlideConfig): SlideDef {
   return {
@@ -24,26 +17,22 @@ export function makeMacFramelessSingleSlide(devicePath: string, index: number, c
     component: ({ cW, cH, locale, theme }) => {
       const copy = COPY[locale][index];
       const isHero = index === 0;
-
-      // 如果提供了 config.primaryScreen，则使用它，否则默认使用 copy.screen
       const primaryScreen = config?.primaryScreen ?? copy.screen;
 
-      // 计算不同视图下的宽度与偏移百分比
-      const macWfl = isHero ? 68 : 66;
-      const macLeftfl = (100 - macWfl) / 2;
-      const textWfl = isHero ? 70 : 62;
-      const textLeftfl = (100 - textWfl) / 2;
+      const macW = isHero ? 64 : 62;
+      const macLeft = (100 - macW) / 2;
+      const textW = isHero ? 58 : 54;
+      const textLeft = (100 - textW) / 2;
 
       return (
         <div style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}>
-          <SlideBackdrop canvas={theme.canvas} canvasAlt={theme.canvasAlt} accent={theme.accent} />
+          <SlideBackdrop background={theme.canvas} />
 
-          {/* 顶部居中文字区 */}
           <div style={{
             position: "absolute",
-            top: isHero ? "6%" : "7%",
-            left: `${textLeftfl}%`,
-            width: `${textWfl}%`,
+            top: isHero ? "5%" : "6%",
+            left: `${textLeft}%`,
+            width: `${textW}%`,
             zIndex: 30,
             display: "flex",
             flexDirection: "column",
@@ -54,11 +43,11 @@ export function makeMacFramelessSingleSlide(devicePath: string, index: number, c
                 src={img("/app-icon.png")}
                 alt="wizju"
                 style={{
-                  width: cW * 0.058,
-                  height: cW * 0.058,
-                  borderRadius: cW * 0.012,
-                  marginBottom: cW * 0.028,
-                  boxShadow: `0 ${cW * 0.010}px ${cW * 0.036}px ${theme.accent}55`,
+                  width: cW * 0.052,
+                  height: cW * 0.052,
+                  borderRadius: cW * 0.011,
+                  marginBottom: cW * 0.024,
+                  boxShadow: `0 ${cW * 0.008}px ${cW * 0.034}px ${theme.brand}55, 0 ${cW * 0.004}px ${cW * 0.014}px rgba(0,0,0,0.2)`,
                 }}
                 draggable={false}
               />
@@ -66,35 +55,58 @@ export function makeMacFramelessSingleSlide(devicePath: string, index: number, c
             <Caption
               label={copy.label}
               headline={copy.headline}
+              emphasisLine={copy.emphasisLine}
               note={copy.note}
               theme={theme}
+              cW={cW}
               isLeft={false}
               isHero={isHero}
+              showNote={isHero}
             />
           </div>
 
-          {/* 无框悬浮 MacBook，底部溢出形成沉浸感 */}
-          <MacBookFrame
-            devicePath={devicePath}
-            alt={copy.label}
-            locale={locale}
-            screen={primaryScreen}
-            theme={theme}
-            showFrame={false}
-            style={{
-              position: "absolute",
-              left: `${macLeftfl}%`,
-              width: `${macWfl}%`,
-              top: isHero ? "43%" : "41%",
-              zIndex: 20,
-            }}
-          />
+          {isHero ? (
+            <HeroMacStage
+              cW={cW}
+              theme={theme}
+              leftPercent={macLeft}
+              widthPercent={macW}
+              topPercent={42.5}
+            >
+              <MacBookFrame
+                devicePath={devicePath}
+                alt={copy.label}
+                locale={locale}
+                screen={primaryScreen}
+                theme={theme}
+                showFrame={false}
+                style={{ width: "100%" }}
+              />
+            </HeroMacStage>
+          ) : (
+            <MacBookFrame
+              devicePath={devicePath}
+              alt={copy.label}
+              locale={locale}
+              screen={primaryScreen}
+              theme={theme}
+              showFrame={false}
+              style={{
+                position: "absolute",
+                left: `${macLeft}%`,
+                width: `${macW}%`,
+                top: "42%",
+                zIndex: 20,
+              }}
+            />
+          )}
 
-          {/* 底部渐变收口：平滑过渡边缘 */}
           <div style={{
             position: "absolute",
-            bottom: 0, left: 0, right: 0,
-            height: "24%",
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: "22%",
             background: `linear-gradient(to top, ${theme.bg} 0%, transparent 100%)`,
             zIndex: 25,
             pointerEvents: "none",

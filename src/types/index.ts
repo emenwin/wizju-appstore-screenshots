@@ -38,15 +38,16 @@ export type ScreenKind = "hub" | "xtream" | "continue" | "emby" | "favorites" | 
  * - frameBezel：设备外框金属边主色（gray-400），随主题联动，保证设备在画布上有清晰边缘
  * - frameDetail：设备物理细节色（灵动岛 / 摄像头 / 屏幕间隙），近黑，两套主题均保持深色
  * - frameShadow：设备外框投影（多层 rgba 阴影串），随主题强度调整
- * - accent：主强调色（Geist blue，替代旧的橙色品牌色）
- * - signal：信号语义色（Geist teal）
- * - emby：媒体语义色（Geist green）
- * - canvas / canvasAlt：幻灯片背景渐变与叠加渐变（Geist 灰阶）
+ * - brand：wizju LIVE 珊瑚红（与 App SemanticColors.live 一致）— 品牌主色
+ * - accent：与 brand 同值，供 headline 强调 / 图标光晕
+ * - signal：IPTV / Live 语义青；emby：Emby 语义绿
+ * - canvas：幻灯片纯色背景（与 bg 一致）
  */
 export type Theme = {
   bg: string;
   fg: string;
   muted: string;
+  brand: string;
   accent: string;
   signal: string;
   emby: string;
@@ -60,7 +61,6 @@ export type Theme = {
   frameDetail: string;
   frameShadow: string;
   canvas: string;
-  canvasAlt: string;
 };
 
 /**
@@ -70,6 +70,8 @@ export type SlideCopy = {
   id: string;
   label: string;
   headline: string[];
+  /** 主标题中需要 accent 强调的行索引（0-based），提升缩略图可读性 */
+  emphasisLine?: number;
   note: string;
   screen: ScreenKind;
 };

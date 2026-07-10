@@ -76,8 +76,8 @@ export function MockScreen({
           width: "9cqw",
           height: "9cqw",
           borderRadius: "2.2cqw",
-          background: theme.accent,
-          boxShadow: `0 1.4cqw 5cqw ${theme.accent}55`,
+          background: theme.brand,
+          boxShadow: `0 1.4cqw 5cqw ${theme.brand}55`,
         }} />
       </div>
 
@@ -96,7 +96,7 @@ export function MockScreen({
             borderRadius: "2.8cqw",
             padding: "2.2cqw 0",
             // 选中 tab：Geist accent 实底 + 页面底色文字（与 accent 形成高对比）
-            background: index === 0 ? theme.accent : theme.panel,
+            background: index === 0 ? theme.brand : theme.panel,
             color: index === 0 ? theme.bg : theme.muted,
             fontSize: "2.4cqw",
             fontWeight: 800,
@@ -115,7 +115,7 @@ export function MockScreen({
         height: "20%",
         borderRadius: "5cqw",
         overflow: "hidden",
-        background: `linear-gradient(135deg, ${theme.signal} 0%, ${theme.accent} 100%)`,
+        background: `linear-gradient(135deg, ${theme.signal} 0%, ${theme.brand} 100%)`,
       }}>
         <div style={{
           position: "absolute",

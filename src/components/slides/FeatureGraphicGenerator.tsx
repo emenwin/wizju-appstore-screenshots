@@ -37,7 +37,7 @@ export const FEATURE_GRAPHIC_SLIDE: SlideDef = {
         padding: `0 ${cW * 0.06}px`,
       }}>
         {/* 背景层 */}
-        <SlideBackdrop canvas={theme.canvas} canvasAlt={theme.canvasAlt} accent={theme.accent} />
+        <SlideBackdrop background={theme.canvas} />
         
         {/* 左侧信息区：App 图标 + 名称 + Slogan */}
         <div style={{ display: "flex", alignItems: "center", gap: cW * 0.03, zIndex: 10 }}>
@@ -48,7 +48,7 @@ export const FEATURE_GRAPHIC_SLIDE: SlideDef = {
               width: cW * 0.11,
               height: cW * 0.11,
               borderRadius: cW * 0.022,
-              boxShadow: `0 ${cW * 0.012}px ${cW * 0.042}px ${theme.accent}44`,
+              boxShadow: `0 ${cW * 0.012}px ${cW * 0.042}px ${theme.brand}44`,
             }}
             draggable={false}
           />
@@ -61,8 +61,18 @@ export const FEATURE_GRAPHIC_SLIDE: SlideDef = {
         </div>
         
         {/* 右侧说明区：文案展示 */}
-        <div style={{ zIndex: 10, width: "38%" }}>
-          <Caption label={copy.label} headline={copy.headline} note={copy.note} theme={theme} isLeft={true} />
+        <div style={{ zIndex: 10, width: "40%" }}>
+          <Caption
+            label={copy.label}
+            headline={copy.headline}
+            emphasisLine={copy.emphasisLine}
+            note={copy.note}
+            theme={theme}
+            cW={cW}
+            isLeft={true}
+            compact={true}
+            showNote={false}
+          />
         </div>
       </div>
     );

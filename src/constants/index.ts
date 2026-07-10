@@ -1,4 +1,4 @@
-import { Locale, ScreenKind, Theme, ThemeId } from "../types";
+import { Locale, ScreenKind, Theme, ThemeId, SlideCopy } from "../types";
 
 // iPhone 默认画布尺寸：以 App Store Connect 6.5" 竖屏基准 1242 × 2688 为准，
 // 与 IPHONE_SIZES 首项保持一致，保证默认预览与导出像素 1:1 对齐、不产生缩放糊化。
@@ -81,17 +81,23 @@ export const UI_TEXT = {
 } as const;
 
 /*
- * 截图内容主题：仅保留 Geist Dark / Light 两套，取值 100% 来自 Geist 设计 token。
- * 字段名为语义角色（见 Theme 类型注释），值随主题切换。
- * - accent：Geist blue（替代旧橙色品牌色）
- * - signal：Geist teal；emby：Geist green
- * - canvas / canvasAlt：Geist 灰阶渐变，无任何品牌色
+ * 截图内容主题：与 wizju App `SemanticColors` 对齐的 dark / light 两套。
+ *
+ * 色彩角色：
+ * - brand / accent：LIVE 珊瑚红（Sidebar「ju」、About 品牌色）— 营销主强调
+ * - signal：IPTV / Live 语义青（Xtream、直播相关点缀）
+ * - emby：Emby 媒体库语义绿
+ * - canvas：幻灯片纯色背景（与 bg 一致）
  */
 export const THEMES: Record<ThemeId, Theme> = {
   dark: {
     bg: "#000000",
-    fg: "#ededed",
-    muted: "#a0a0a0",
+    fg: "#fafafa",
+    muted: "#999999",
+    brand: "#E85C4A",
+    accent: "#E85C4A",
+    signal: "#2dd4bf",
+    emby: "#34d399",
     panel: "#ffffff14",
     panelStrong: "#ffffff1f",
     border: "#ffffff24",
@@ -101,16 +107,16 @@ export const THEMES: Record<ThemeId, Theme> = {
     frameBezel: "#383838",
     frameDetail: "#000000",
     frameShadow: "0 24px 70px rgba(0,0,0,0.6), 0 8px 24px rgba(0,0,0,0.45)",
-    accent: "#47a8ff",
-    signal: "#2dd4bf",
-    emby: "#34d399",
-    canvas: "linear-gradient(150deg, #000000 0%, #1c1c1c 50%, #2c2c2c 100%)",
-    canvasAlt: "linear-gradient(145deg, #2c2c2c 0%, #1c1c1c 55%, #000000 100%)",
+    canvas: "#000000",
   },
   light: {
-    bg: "#ffffff",
-    fg: "#111111",
-    muted: "#666666",
+    bg: "#fafafa",
+    fg: "#292929",
+    muted: "#7a7a7a",
+    brand: "#D95240",
+    accent: "#D95240",
+    signal: "#0d9488",
+    emby: "#059669",
     panel: "#00000014",
     panelStrong: "#0000001f",
     border: "#00000024",
@@ -120,65 +126,58 @@ export const THEMES: Record<ThemeId, Theme> = {
     frameBezel: "#a1a1a1",
     frameDetail: "#0a0a0a",
     frameShadow: "0 24px 60px rgba(0,0,0,0.22), 0 8px 20px rgba(0,0,0,0.12)",
-    accent: "#0070f3",
-    signal: "#0d9488",
-    emby: "#059669",
-    canvas: "linear-gradient(150deg, #ffffff 0%, #f5f5f5 50%, #e8e8e8 100%)",
-    canvasAlt: "linear-gradient(145deg, #e8e8e8 0%, #f5f5f5 55%, #ffffff 100%)",
+    canvas: "#fafafa",
   },
 };
 
-export const COPY: Record<
-  Locale,
-  Array<{
-    id: string;
-    label: string;
-    headline: string[];
-    note: string;
-    screen: ScreenKind;
-  }>
-> = {
+export const COPY: Record<Locale, SlideCopy[]> = {
   en: [
     {
       id: "iptv-emby-hub",
       label: "MEDIA HUB",
       headline: ["IPTV and Emby,", "one home."],
-      note: "M3U, Xtream Codes, and Emby sources stay organized together.",
+      emphasisLine: 1,
+      note: "M3U, Xtream, and Emby in one place.",
       screen: "hub",
     },
     {
       id: "xtream-sections",
       label: "XTREAM",
-      headline: ["Live, movies,", "series sorted."],
-      note: "Browse Live TV, VOD, and Series without digging through mixed lists.",
+      headline: ["Live. Movies.", "Series sorted."],
+      emphasisLine: 1,
+      note: "Browse Live, VOD, and Series separately.",
       screen: "xtream",
     },
     {
       id: "continue-watching",
       label: "NEXT UP",
-      headline: ["Pick up where", "you stopped."],
-      note: "Recent items and progress are ready the moment you open wizju.",
+      headline: ["Pick up", "where you left."],
+      emphasisLine: 0,
+      note: "Recent items and progress on launch.",
       screen: "continue",
     },
     {
       id: "emby-library",
       label: "EMBY",
-      headline: ["Your Emby library", "feels native."],
-      note: "Hero banners, libraries, latest additions, and live TV in one flow.",
+      headline: ["Your Emby", "library native."],
+      emphasisLine: 1,
+      note: "Libraries, latest, and live TV together.",
       screen: "emby",
     },
     {
       id: "favorites",
       label: "FAVORITES",
-      headline: ["Favorites stay", "within reach."],
-      note: "Keep channels and films close without rebuilding every source list.",
+      headline: ["Favorites", "within reach."],
+      emphasisLine: 0,
+      note: "Channels and films stay one tap away.",
       screen: "favorites",
     },
     {
       id: "native-apple",
       label: "NATIVE",
-      headline: ["Made for iPhone", "and Mac."],
-      note: "A focused Apple-first experience for personal streams and libraries.",
+      headline: ["Built for", "iPhone and Mac."],
+      emphasisLine: 1,
+      note: "Apple-first IPTV and media library experience.",
       screen: "native",
     },
   ],
@@ -186,35 +185,40 @@ export const COPY: Record<
     {
       id: "iptv-emby-hub",
       label: "媒体中枢",
-      headline: ["IPTV 与 Emby，", "一处管理。"],
-      note: "M3U、Xtream Codes、Emby 来源集中整理。",
+      headline: ["IPTV 与 Emby", "一处管理。"],
+      emphasisLine: 1,
+      note: "M3U、Xtream、Emby 来源集中整理。",
       screen: "hub",
     },
     {
       id: "xtream-sections",
       label: "XTREAM",
-      headline: ["直播电影剧集，", "清楚分区。"],
-      note: "Live、VOD、Series 分开浏览，少翻找。",
+      headline: ["直播电影", "剧集分区。"],
+      emphasisLine: 1,
+      note: "Live、VOD、Series 分开浏览。",
       screen: "xtream",
     },
     {
       id: "continue-watching",
       label: "继续观看",
-      headline: ["打开就接着看。"],
-      note: "最近观看与播放进度回到首页。",
+      headline: ["打开", "接着看。"],
+      emphasisLine: 1,
+      note: "最近观看与进度回到首页。",
       screen: "continue",
     },
     {
       id: "emby-library",
       label: "EMBY",
-      headline: ["你的 Emby 库，", "原生呈现。"],
-      note: "海报、媒体库、最新添加和直播入口放在一起。",
+      headline: ["Emby 媒体库", "原生呈现。"],
+      emphasisLine: 0,
+      note: "媒体库、最新添加与直播入口合一。",
       screen: "emby",
     },
     {
       id: "favorites",
       label: "收藏",
-      headline: ["常看内容，", "随手打开。"],
+      headline: ["常看内容", "随手打开。"],
+      emphasisLine: 0,
       note: "频道与影片收藏后更快回到播放。",
       screen: "favorites",
     },
@@ -222,7 +226,8 @@ export const COPY: Record<
       id: "native-apple",
       label: "原生体验",
       headline: ["为 iPhone", "和 Mac 打造。"],
-      note: "面向个人 IPTV 与媒体库的 Apple 平台体验。",
+      emphasisLine: 1,
+      note: "面向个人 IPTV 与媒体库的 Apple 体验。",
       screen: "native",
     },
   ],
