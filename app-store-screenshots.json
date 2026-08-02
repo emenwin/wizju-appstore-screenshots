@@ -1,0 +1,679 @@
+{
+  "schemaVersion": 2,
+  "appName": "wizju",
+  "themeId": "wizju-light",
+  "connectedCanvas": false,
+  "locales": [
+    "en",
+    "zh-Hans"
+  ],
+  "locale": "en",
+  "device": "iphone",
+  "orientation": "portrait",
+  "appIcon": "/app-icon.png",
+  "slidesByDevice": {
+    "iphone": [
+      {
+        "id": "s_wizju_hero_0",
+        "layout": "hero",
+        "label": {
+          "en": "MEDIA HUB",
+          "zh-Hans": "媒体中枢"
+        },
+        "headline": {
+          "en": "IPTV and Emby,\none home.",
+          "zh-Hans": "IPTV 与 Emby\n一处管理。"
+        },
+        "screenshot": "/screenshots/uploaded/8c7615d8fcd8033a.png",
+        "transforms": {
+          "device": {
+            "x": 146.87453238506035,
+            "y": 763.2454910461835,
+            "width": 1025,
+            "height": 2087,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_wizju_db1_1",
+        "layout": "device-bottom",
+        "label": {
+          "en": "XTREAM",
+          "zh-Hans": "XTREAM"
+        },
+        "headline": {
+          "en": "Live. Movies.\nSeries sorted.",
+          "zh-Hans": "直播电影\n剧集分区。"
+        },
+        "screenshot": "/screenshots/uploaded/e78bc0a86e7247ba.png",
+        "transforms": {
+          "device": {
+            "x": 153.1822478386166,
+            "y": 742.7384615384615,
+            "width": 1013.6355043227666,
+            "height": 2064.96,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_wizju_db2_2",
+        "layout": "device-bottom",
+        "label": {
+          "en": "NEXT UP",
+          "zh-Hans": "继续观看"
+        },
+        "headline": {
+          "en": "Pick up\nwhere you left.",
+          "zh-Hans": "打开\n接着看。"
+        },
+        "screenshot": "/screenshots/uploaded/ef44f3fbe8ae5b0a.png",
+        "inverted": false,
+        "transforms": {
+          "device": {
+            "x": 153.1822478386166,
+            "y": 742.7384615384615,
+            "width": 1013.6355043227666,
+            "height": 2064.96,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 105.59999999999991,
+            "y": 229.44,
+            "width": 1108.8,
+            "height": 803.0400000000001,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      },
+      {
+        "id": "s_wizju_db3_3",
+        "layout": "device-bottom",
+        "label": {
+          "en": "EMBY",
+          "zh-Hans": "EMBY"
+        },
+        "headline": {
+          "en": "Your Emby\nlibrary native.",
+          "zh-Hans": "Emby 媒体库\n原生呈现。"
+        },
+        "screenshot": "/screenshots/uploaded/1231e987c09369d6.png",
+        "transforms": {
+          "device": {
+            "x": 153.1822478386166,
+            "y": 745.6800000000001,
+            "width": 1013.6355043227666,
+            "height": 2064.96,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_wizju_db4_4",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FAVORITES",
+          "zh-Hans": "收藏"
+        },
+        "headline": {
+          "en": "Favorites\nwithin reach.",
+          "zh-Hans": "常看内容\n随手打开。"
+        },
+        "screenshot": "/screenshots/uploaded/1231e987c09369d6.png",
+        "inverted": false,
+        "transforms": {
+          "device": {
+            "x": 153.1822478386166,
+            "y": 738.3261538461536,
+            "width": 1013.6355043227666,
+            "height": 2064.96,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_wizju_more_5",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE",
+          "zh-Hans": "更多"
+        },
+        "headline": {
+          "en": "M3U / IPTV\nXtream Codes\nEmby\nContinue Watching\nFavorites\niPhone",
+          "zh-Hans": "M3U / IPTV\nXtream Codes\nEmby\n继续观看\n收藏\niPhone"
+        },
+        "screenshot": "",
+        "inverted": false
+      }
+    ],
+    "android": [
+      {
+        "id": "s_wizju_hero_c",
+        "layout": "hero",
+        "label": {
+          "en": "MEDIA HUB",
+          "zh-Hans": "媒体中枢"
+        },
+        "headline": {
+          "en": "IPTV and Emby,\none home.",
+          "zh-Hans": "IPTV 与 Emby\n一处管理。"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/hub.png"
+      },
+      {
+        "id": "s_wizju_db1_d",
+        "layout": "device-bottom",
+        "label": {
+          "en": "XTREAM",
+          "zh-Hans": "XTREAM"
+        },
+        "headline": {
+          "en": "Live. Movies.\nSeries sorted.",
+          "zh-Hans": "直播电影\n剧集分区。"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/xtream.png"
+      },
+      {
+        "id": "s_wizju_db2_e",
+        "layout": "device-bottom",
+        "label": {
+          "en": "NEXT UP",
+          "zh-Hans": "继续观看"
+        },
+        "headline": {
+          "en": "Pick up\nwhere you left.",
+          "zh-Hans": "打开\n接着看。"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/continue.png",
+        "inverted": true
+      },
+      {
+        "id": "s_wizju_db3_f",
+        "layout": "device-bottom",
+        "label": {
+          "en": "EMBY",
+          "zh-Hans": "EMBY"
+        },
+        "headline": {
+          "en": "Your Emby\nlibrary native.",
+          "zh-Hans": "Emby 媒体库\n原生呈现。"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/emby.png"
+      },
+      {
+        "id": "s_wizju_db4_g",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FAVORITES",
+          "zh-Hans": "收藏"
+        },
+        "headline": {
+          "en": "Favorites\nwithin reach.",
+          "zh-Hans": "常看内容\n随手打开。"
+        },
+        "screenshot": "/screenshots/android/phone/{locale}/favorites.png",
+        "inverted": true
+      },
+      {
+        "id": "s_wizju_more_h",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE",
+          "zh-Hans": "更多"
+        },
+        "headline": {
+          "en": "M3U / IPTV\nXtream Codes\nEmby\nContinue Watching\nFavorites\nPhone",
+          "zh-Hans": "M3U / IPTV\nXtream Codes\nEmby\n继续观看\n收藏\n手机"
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "ipad": [
+      {
+        "id": "s_wizju_hero_6",
+        "layout": "hero",
+        "label": {
+          "en": "MEDIA HUB",
+          "zh-Hans": "媒体中枢"
+        },
+        "headline": {
+          "en": "IPTV and Emby,\none home.",
+          "zh-Hans": "IPTV 与 Emby\n一处管理。"
+        },
+        "screenshot": "/screenshots/uploaded/614534538b4e3573.png",
+        "transforms": {
+          "device": {
+            "x": 577.9200000000001,
+            "y": 1019.3132800000001,
+            "width": 1596.1599999999999,
+            "height": 1229.0431999999998,
+            "rotation": 0,
+            "zIndex": 3
+          }
+        }
+      },
+      {
+        "id": "s_wizju_db1_7",
+        "layout": "device-bottom",
+        "label": {
+          "en": "XTREAM",
+          "zh-Hans": "XTREAM"
+        },
+        "headline": {
+          "en": "Live. Movies.\nSeries sorted.",
+          "zh-Hans": "直播电影\n剧集分区。"
+        },
+        "screenshot": "/screenshots/uploaded/40aa5988b1c10556.png"
+      },
+      {
+        "id": "s_wizju_db2_8",
+        "layout": "device-bottom",
+        "label": {
+          "en": "NEXT UP",
+          "zh-Hans": "继续观看"
+        },
+        "headline": {
+          "en": "Pick up\nwhere you left.",
+          "zh-Hans": "打开\n接着看。"
+        },
+        "screenshot": "/screenshots/uploaded/bdeda2e60edb5074.png",
+        "inverted": true
+      },
+      {
+        "id": "s_wizju_db3_9",
+        "layout": "device-bottom",
+        "label": {
+          "en": "EMBY",
+          "zh-Hans": "EMBY"
+        },
+        "headline": {
+          "en": "Your Emby\nlibrary native.",
+          "zh-Hans": "Emby 媒体库\n原生呈现。"
+        },
+        "screenshot": "/screenshots/uploaded/53ce4581d0b227ff.png"
+      },
+      {
+        "id": "s_wizju_db4_a",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FAVORITES",
+          "zh-Hans": "收藏"
+        },
+        "headline": {
+          "en": "Favorites\nwithin reach.",
+          "zh-Hans": "常看内容\n随手打开。"
+        },
+        "screenshot": "/screenshots/uploaded/712b5908c13800a3.png",
+        "inverted": true
+      },
+      {
+        "id": "s_wizju_more_b",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE",
+          "zh-Hans": "更多"
+        },
+        "headline": {
+          "en": "M3U / IPTV\nXtream Codes\nEmby\nContinue Watching\nFavorites\niPhone",
+          "zh-Hans": "M3U / IPTV\nXtream Codes\nEmby\n继续观看\n收藏\niPhone"
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "mac": [
+      {
+        "id": "s_wizju_mac_hero_0",
+        "layout": "hero",
+        "label": {
+          "zh-Hans": "媒体中枢",
+          "en": "MEDIA HUB"
+        },
+        "headline": {
+          "en": "IPTV and Emby,\none home.",
+          "zh-Hans": "IPTV 与 Emby\n一处管理。"
+        },
+        "screenshot": "/screenshots/uploaded/25dde7b0b40b9bc5.png",
+        "transforms": {
+          "device": {
+            "x": 306.66666666666674,
+            "y": 495.3762886597938,
+            "width": 2266.6666666666665,
+            "height": 1530,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 219.3705882352941,
+            "y": 18.61764705882367,
+            "width": 2419.2,
+            "height": 504.00000000000006,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      },
+      {
+        "id": "s_wizju_mac_db1_1",
+        "layout": "hero",
+        "label": {
+          "en": "XTREAM",
+          "zh-Hans": "XTREAM"
+        },
+        "headline": {
+          "en": "Live. Movies.\nSeries sorted.",
+          "zh-Hans": "直播电影\n剧集分区。"
+        },
+        "screenshot": "/screenshots/uploaded/3a65bd7a14d3d235.png",
+        "transforms": {
+          "caption": {
+            "x": 212.01764705882348,
+            "y": 25.970588235294116,
+            "width": 2419.2,
+            "height": 504,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      },
+      {
+        "id": "s_wizju_mac_win_2",
+        "layout": "hero",
+        "label": {
+          "zh-Hans": "EMBY",
+          "en": "EMBY"
+        },
+        "headline": {
+          "en": "Your Emby\nlibrary native.",
+          "zh-Hans": "Emby 媒体库\n原生呈现。"
+        },
+        "screenshot": "/screenshots/uploaded/d7b9d31782971246.png",
+        "transforms": {
+          "device": {
+            "x": 306.66666666666674,
+            "y": 499.5,
+            "width": 2266.6666666666665,
+            "height": 1530,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 248.78219207855312,
+            "y": 18.617651736536153,
+            "width": 2419,
+            "height": 504,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      },
+      {
+        "id": "s_wizju_mac_db3_3",
+        "layout": "hero",
+        "label": {
+          "en": "NXET UP",
+          "zh-Hans": "继续观看"
+        },
+        "headline": {
+          "en": "Pick up\nwhere you left.",
+          "zh-Hans": "打开\n接着看。"
+        },
+        "screenshot": "/screenshots/uploaded/dc129b0b292cb7b1.png",
+        "inverted": false,
+        "transforms": {
+          "device": {
+            "x": 306.66666666666674,
+            "y": 499.5,
+            "width": 2266.6666666666665,
+            "height": 1530,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 212.01764705882346,
+            "y": 40.67647058823531,
+            "width": 2419.2,
+            "height": 504.00000000000006,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      },
+      {
+        "id": "s_wizju_mac_more_4",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE",
+          "zh-Hans": "更多"
+        },
+        "headline": {
+          "en": "M3U / IPTV\nXtream Codes\nEmby\nContinue Watching\nFavorites\nMac",
+          "zh-Hans": "M3U / IPTV\nXtream Codes\nEmby\n继续观看\n收藏\nMac"
+        },
+        "screenshot": "",
+        "inverted": true,
+        "transforms": {
+          "caption": {
+            "x": 357.8529411764707,
+            "y": 339.55882352941205,
+            "width": 2304,
+            "height": 540,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      },
+      {
+        "id": "s_msbkfgcy_m",
+        "layout": "device-bottom",
+        "label": {},
+        "headline": {},
+        "screenshot": "/screenshots/uploaded/a53f2b458e5ef529.png",
+        "transforms": {
+          "device": {
+            "x": 306.66666666666674,
+            "y": 234,
+            "width": 2266.6666666666665,
+            "height": 1530,
+            "rotation": 0,
+            "zIndex": 3
+          },
+          "caption": {
+            "x": 252.4588235294117,
+            "y": 1296,
+            "width": 2419.2,
+            "height": 504,
+            "rotation": 0,
+            "zIndex": 4
+          }
+        }
+      }
+    ],
+    "android-7": [
+      {
+        "id": "s_wizju_hero_i",
+        "layout": "hero",
+        "label": {
+          "en": "MEDIA HUB",
+          "zh-Hans": "媒体中枢"
+        },
+        "headline": {
+          "en": "IPTV and Emby,\none home.",
+          "zh-Hans": "IPTV 与 Emby\n一处管理。"
+        },
+        "screenshot": "/screenshots/android/tablet-7/portrait/{locale}/hub.png"
+      },
+      {
+        "id": "s_wizju_db1_j",
+        "layout": "device-bottom",
+        "label": {
+          "en": "XTREAM",
+          "zh-Hans": "XTREAM"
+        },
+        "headline": {
+          "en": "Live. Movies.\nSeries sorted.",
+          "zh-Hans": "直播电影\n剧集分区。"
+        },
+        "screenshot": "/screenshots/android/tablet-7/portrait/{locale}/xtream.png"
+      },
+      {
+        "id": "s_wizju_db2_k",
+        "layout": "device-bottom",
+        "label": {
+          "en": "NEXT UP",
+          "zh-Hans": "继续观看"
+        },
+        "headline": {
+          "en": "Pick up\nwhere you left.",
+          "zh-Hans": "打开\n接着看。"
+        },
+        "screenshot": "/screenshots/android/tablet-7/portrait/{locale}/continue.png",
+        "inverted": true
+      },
+      {
+        "id": "s_wizju_db3_l",
+        "layout": "device-bottom",
+        "label": {
+          "en": "EMBY",
+          "zh-Hans": "EMBY"
+        },
+        "headline": {
+          "en": "Your Emby\nlibrary native.",
+          "zh-Hans": "Emby 媒体库\n原生呈现。"
+        },
+        "screenshot": "/screenshots/android/tablet-7/portrait/{locale}/emby.png"
+      },
+      {
+        "id": "s_wizju_db4_m",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FAVORITES",
+          "zh-Hans": "收藏"
+        },
+        "headline": {
+          "en": "Favorites\nwithin reach.",
+          "zh-Hans": "常看内容\n随手打开。"
+        },
+        "screenshot": "/screenshots/android/tablet-7/portrait/{locale}/favorites.png",
+        "inverted": true
+      },
+      {
+        "id": "s_wizju_more_n",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE",
+          "zh-Hans": "更多"
+        },
+        "headline": {
+          "en": "M3U / IPTV\nXtream Codes\nEmby\nContinue Watching\nFavorites\nPhone",
+          "zh-Hans": "M3U / IPTV\nXtream Codes\nEmby\n继续观看\n收藏\n手机"
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "android-10": [
+      {
+        "id": "s_wizju_hero_o",
+        "layout": "hero",
+        "label": {
+          "en": "MEDIA HUB",
+          "zh-Hans": "媒体中枢"
+        },
+        "headline": {
+          "en": "IPTV and Emby,\none home.",
+          "zh-Hans": "IPTV 与 Emby\n一处管理。"
+        },
+        "screenshot": "/screenshots/android/tablet-10/portrait/{locale}/hub.png"
+      },
+      {
+        "id": "s_wizju_db1_p",
+        "layout": "device-bottom",
+        "label": {
+          "en": "XTREAM",
+          "zh-Hans": "XTREAM"
+        },
+        "headline": {
+          "en": "Live. Movies.\nSeries sorted.",
+          "zh-Hans": "直播电影\n剧集分区。"
+        },
+        "screenshot": "/screenshots/android/tablet-10/portrait/{locale}/xtream.png"
+      },
+      {
+        "id": "s_wizju_db2_q",
+        "layout": "device-bottom",
+        "label": {
+          "en": "NEXT UP",
+          "zh-Hans": "继续观看"
+        },
+        "headline": {
+          "en": "Pick up\nwhere you left.",
+          "zh-Hans": "打开\n接着看。"
+        },
+        "screenshot": "/screenshots/android/tablet-10/portrait/{locale}/continue.png",
+        "inverted": true
+      },
+      {
+        "id": "s_wizju_db3_r",
+        "layout": "device-bottom",
+        "label": {
+          "en": "EMBY",
+          "zh-Hans": "EMBY"
+        },
+        "headline": {
+          "en": "Your Emby\nlibrary native.",
+          "zh-Hans": "Emby 媒体库\n原生呈现。"
+        },
+        "screenshot": "/screenshots/android/tablet-10/portrait/{locale}/emby.png"
+      },
+      {
+        "id": "s_wizju_db4_s",
+        "layout": "device-bottom",
+        "label": {
+          "en": "FAVORITES",
+          "zh-Hans": "收藏"
+        },
+        "headline": {
+          "en": "Favorites\nwithin reach.",
+          "zh-Hans": "常看内容\n随手打开。"
+        },
+        "screenshot": "/screenshots/android/tablet-10/portrait/{locale}/favorites.png",
+        "inverted": true
+      },
+      {
+        "id": "s_wizju_more_t",
+        "layout": "no-device",
+        "label": {
+          "en": "MORE",
+          "zh-Hans": "更多"
+        },
+        "headline": {
+          "en": "M3U / IPTV\nXtream Codes\nEmby\nContinue Watching\nFavorites\nPhone",
+          "zh-Hans": "M3U / IPTV\nXtream Codes\nEmby\n继续观看\n收藏\n手机"
+        },
+        "screenshot": "",
+        "inverted": true
+      }
+    ],
+    "feature-graphic": [
+      {
+        "id": "s_wizju_fg_u",
+        "layout": "feature-graphic",
+        "label": {},
+        "headline": {
+          "en": "IPTV and Emby, one home.",
+          "zh-Hans": "IPTV 与 Emby，一处管理。"
+        },
+        "screenshot": ""
+      }
+    ]
+  }
+}
